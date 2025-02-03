@@ -4,28 +4,28 @@ import { NextResponse } from "next/server";
 const userUploadedVideos = [
   {
     title: "Sunset Timelapse",
-    url: "https://www.videvo.net/videvo_files/converted/2014_07/preview/Sunrise_Timelapse_20_Videvo.mov79545.webm",
+    url: "https://cdn.pixabay.com/video/2017/09/21/14133-294656133_large.mp4",
     description: "A beautiful sunset timelapse.",
   },
   {
     title: "City Traffic",
-    url: "https://www.videvo.net/videvo_files/converted/2015_08/preview/City_Cars_Timelapse.mp494793.webm",
+    url: "https://cdn.pixabay.com/video/2021/02/25/66598-515629632_large.mp4",
     description: "City traffic during rush hour.",
-  },
+  }
 ];
 
 // Recommended videos
 const recommendedVideos = [
   {
     title: "Nature Walk",
-    url: "https://www.videvo.net/videvo_files/converted/2017_11/preview/170810_Forest_Path.mp479985.webm",
+    url: "https://cdn.pixabay.com/video/2022/10/24/136076-857415993_large.mp4",
     description: "A peaceful walk through the forest.",
   },
   {
     title: "Ocean Waves",
-    url: "https://www.videvo.net/videvo_files/converted/2016_02/preview/Ocean_Waves_5_Videvo.mov90514.webm",
+    url: "https://cdn.pixabay.com/video/2017/06/22/9465-295176288_large.mp4",
     description: "Relaxing ocean waves crashing on the shore.",
-  },
+  }
 ];
 
 // Combine user-uploaded and recommended videos

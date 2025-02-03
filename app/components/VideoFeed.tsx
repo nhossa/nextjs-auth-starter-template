@@ -1,14 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
+import { Video } from "next-video";
 
-type Video = {
+type VideoData = {
   title: string;
   url: string;
   description: string;
 };
 
 export default function VideoFeed() {
-  const [videos, setVideos] = useState<Video[]>([]);
+  const [videos, setVideos] = useState<VideoData[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -38,7 +39,16 @@ export default function VideoFeed() {
       {videos.map((video, index) => (
         <div key={index} className="mb-8 border border-gray-300 p-4 rounded-lg shadow-lg">
           <h3 className="font-semibold">{video.title}</h3>
-          <video src={video.url} controls className="w-80 h-64 rounded-lg my-2" />
+          <Video
+            src={video.url}
+            width={400}
+            height={300}
+            autoPlay={false}
+            controls
+            loop
+            poster="/default-thumbnail.jpg" // Add a default poster image
+            className="rounded-lg"
+          />
           <p className="text-sm text-gray-600">{video.description}</p>
         </div>
       ))}
