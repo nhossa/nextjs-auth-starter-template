@@ -2,26 +2,34 @@ import { NextResponse } from "next/server";
 
 let videos = [
   {
-    title: "Sunset Timelapse",
-    url: "https://www.videvo.net/videvo_files/converted/2014_07/preview/Sunrise_Timelapse_20_Videvo.mov79545.webm",
-    description: "A beautiful sunset timelapse.",
+    title: "Big Buck Bunny",
+    url: "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4",
+    description: "A short animated video."
   },
   {
-    title: "City Traffic",
-    url: "https://www.videvo.net/videvo_files/converted/2015_08/preview/City_Cars_Timelapse.mp494793.webm",
-    description: "City traffic during rush hour.",
-  },
+    title: "Sintel Trailer",
+    url: "https://test-videos.co.uk/vids/sintel/mp4/h264/720/Sintel_720_10s_1MB.mp4",
+    description: "A trailer for the short film Sintel."
+  }
 ];
 
-export async function POST(req) {
-  const { title, url, description } = await req.json();
-
-  const newVideo = { title, url, description };
-  videos.push(newVideo);
-
-  return NextResponse.json({ message: "Video added!", videos });
+export async function GET() {
+  return NextResponse.json({ data: { Get: { Video: videos } } });
 }
 
-export async function GET() {
-  return NextResponse.json(videos);
+export async function POST(req) {
+  try {
+    const { title, url, description } = await req.json();
+
+    if (!title || !url || !description) {
+      return NextResponse.json({ error: "All fields are required." }, { status: 400 });
+    }
+
+    const newVideo = { title, url, description };
+    videos.push(newVideo);
+
+    return NextResponse.json({ message: "Video uploaded successfully!", video: newVideo });
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to upload video." }, { status: 500 });
+  }
 }
