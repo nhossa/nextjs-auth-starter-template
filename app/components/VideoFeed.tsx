@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Video } from "next-video";
+import ReactPlayer from "react-player";
 
 type VideoData = {
   title: string;
@@ -39,15 +39,13 @@ export default function VideoFeed() {
       {videos.map((video, index) => (
         <div key={index} className="mb-8 border border-gray-300 p-4 rounded-lg shadow-lg">
           <h3 className="font-semibold">{video.title}</h3>
-          <Video
-            src={video.url}
-            width={400}
-            height={300}
-            autoPlay={false}
+          <ReactPlayer
+            url={video.url}
             controls
+            width="100%"
+            height="300px"
+            playing={false} // Change to `true` for autoplay
             loop
-            poster="/default-thumbnail.jpg" // Add a default poster image
-            className="rounded-lg"
           />
           <p className="text-sm text-gray-600">{video.description}</p>
         </div>
