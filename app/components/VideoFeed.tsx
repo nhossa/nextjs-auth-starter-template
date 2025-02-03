@@ -38,7 +38,13 @@ export default function VideoFeed() {
       {videos.map((video, index) => (
         <div key={index} className="mb-8 border border-gray-300 p-4 rounded-lg shadow-lg">
           <h3 className="font-semibold">{video.title}</h3>
-          <video src={video.url} controls className="w-80 h-64 rounded-lg my-2" />
+          <video
+            src={video.url}
+            controls
+            className="w-80 h-64 rounded-lg my-2"
+            preload="metadata" // Ensure video metadata loads
+            onError={(e) => console.error("Video failed to load:", video.url)}
+          />
           <p className="text-sm text-gray-600">{video.description}</p>
         </div>
       ))}
