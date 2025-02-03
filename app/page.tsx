@@ -1,19 +1,56 @@
-import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs"
-import { LearnMore } from "./components/learn-more"
-import screenshotDevices from "./images/user-button@2xrl.webp"
-import signIn from "./images/sign-in@2xrl.webp"
-import verify from "./images/verify@2xrl.webp"
-import userButton2 from "./images/user-button-2@2xrl.webp"
-import signUp from "./images/sign-up@2xrl.webp"
-import logo from "./images/logo.png"
-import "./home.css"
-import Image from "next/image"
-import Link from "next/link"
-import { Footer } from "./components/footer"
+"use client";
+import { useEffect, useState } from "react";
+import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { LearnMore } from "./components/learn-more";
+import screenshotDevices from "./images/user-button@2xrl.webp";
+import signIn from "./images/sign-in@2xrl.webp";
+import verify from "./images/verify@2xrl.webp";
+import userButton2 from "./images/user-button-2@2xrl.webp";
+import signUp from "./images/sign-up@2xrl.webp";
+import logo from "./images/logo.png";
+import "./home.css";
+import Image from "next/image";
+import Link from "next/link";
+import { Footer } from "./components/footer";
+import { CARDS } from "./consts/cards";
+import { ClerkLogo } from "./components/clerk-logo";
+import { NextLogo } from "./components/next-logo";
 
-import { CARDS } from "./consts/cards"
-import { ClerkLogo } from "./components/clerk-logo"
-import { NextLogo } from "./components/next-logo"
+// ✅ Define TypeScript type for video objects
+type Video = {
+  title: string;
+  url: string;
+  description: string;
+};
+
+function VideoFeed() {
+  const [videos, setVideos] = useState<Video[]>([]); // ✅ Fixed type definition
+
+  useEffect(() => {
+    fetch("/api/recommendations")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.data && data.data.Get && data.data.Get.Video) {
+          setVideos(data.data.Get.Video);
+        }
+      })
+      .catch((error) => console.error("Error fetching videos:", error));
+  }, []);
+
+  return (
+    <div>
+      <h2>Video Feed</h2>
+      {videos.length === 0 ? <p>No videos available.</p> : null}
+      {videos.map((video, index) => (
+        <div key={index}>
+          <h3>{video.title}</h3>
+          <video src={video.url} controls width="500" />
+          <p>{video.description}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function Home() {
   return (
@@ -63,13 +100,19 @@ export default function Home() {
               </SignedOut>
             </div>
           </div>
+
+          {/* ✅ Video Feed is Now Inside Home */}
+          <div className="p-10">
+            <VideoFeed />
+          </div>
+
           <div className="flex gap-8 w-full h-[41.25rem] scale-[1.03]">
             <div className="space-y-8 translate-y-12">
               <Image
                 alt="Device"
                 src={signUp}
                 unoptimized
-                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
+                className="flex-none rounded-xl bg-white shadow-lg ring-1 ring-gray-950/5"
               />
             </div>
             <div className="space-y-8 -translate-y-4">
@@ -77,13 +120,13 @@ export default function Home() {
                 alt="Device"
                 src={verify}
                 unoptimized
-                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
+                className="flex-none rounded-xl bg-white shadow-lg ring-1 ring-gray-950/5"
               />
               <Image
                 alt="Device"
                 src={userButton2}
                 unoptimized
-                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
+                className="flex-none rounded-xl bg-white shadow-lg ring-1 ring-gray-950/5"
               />
             </div>
             <div className="space-y-8 -translate-y-[22.5rem]">
@@ -91,13 +134,13 @@ export default function Home() {
                 alt="Device"
                 src={signIn}
                 unoptimized
-                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
+                className="flex-none rounded-xl bg-white shadow-lg ring-1 ring-gray-950/5"
               />
               <Image
                 alt="Device"
                 src={screenshotDevices}
                 unoptimized
-                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
+                className="flex-none rounded-xl bg-white shadow-lg ring-1 ring-gray-950/5"
               />
             </div>
           </div>
@@ -107,5 +150,5 @@ export default function Home() {
       <LearnMore cards={CARDS} />
       <Footer />
     </>
-  )
+  );
 }
