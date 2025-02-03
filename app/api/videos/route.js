@@ -19,7 +19,8 @@ export async function GET() {
 
 export async function POST(req) {
   try {
-    const { title, url, description } = await req.json();
+    const body = await req.json();
+    const { title, url, description } = body;
 
     if (!title || !url || !description) {
       return NextResponse.json({ error: "All fields are required." }, { status: 400 });
