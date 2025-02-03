@@ -20,12 +20,11 @@ export default function LikeComment({ title, url, description }: VideoProps) {
   };
 
   return (
-    <div className="p-4 border rounded-lg shadow-lg w-96">
-      <h3 className="text-lg font-semibold">{title}</h3>
-      <video src={url} controls className="w-full h-64 rounded-lg my-2" />
-      <p className="text-gray-500">{description}</p>
-
-      <button onClick={() => setLikes(likes + 1)} className="mt-2 px-4 py-2 bg-blue-500 text-white rounded">
+    <div className="p-4 border-t mt-4">
+      <button
+        onClick={() => setLikes(likes + 1)}
+        className="px-4 py-2 bg-blue-500 text-white rounded"
+      >
         ❤️ {likes} Likes
       </button>
 
